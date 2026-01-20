@@ -1,0 +1,8 @@
+package com.asdaq.taskmanager.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.asdaq.taskmanager.entity.User;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}
