@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.asdaq.taskmanager.dto.UserDto;
 import com.asdaq.taskmanager.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -21,8 +23,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(
+            @Valid @RequestBody UserDto userDto) {
+
         UserDto createdUser = userService.createUser(userDto);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
+
 }
