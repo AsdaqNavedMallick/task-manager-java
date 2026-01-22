@@ -3,6 +3,7 @@ package com.asdaq.taskmanager.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.asdaq.taskmanager.dto.UserDto;
@@ -14,9 +15,12 @@ import com.asdaq.taskmanager.service.UserService;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -25,7 +29,7 @@ public class UserServiceImpl implements UserService {
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setRole(userDto.getRole());
-        user.setPassword("encrypted"); // TEMP (will fix later)
+        user.setPassword(passwordEncoder.encode("password123"));
 
         User savedUser = userRepository.save(user);
 
