@@ -60,4 +60,33 @@ public class UserServiceImpl implements UserService {
                 user.getRole()
         );
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+
+        userRepository.delete(user);
+    }
+
+    @Override
+    public UserDto updateUser(Long id, UserDto userDto) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setRole(userDto.getRole());
+
+        User updatedUser = userRepository.save(user);
+
+        return new UserDto(
+                updatedUser.getId(),
+                updatedUser.getName(),
+                updatedUser.getEmail(),
+                updatedUser.getRole()
+        );
+    }
+
 }
