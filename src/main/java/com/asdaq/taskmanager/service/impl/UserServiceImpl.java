@@ -1,10 +1,14 @@
 package com.asdaq.taskmanager.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.asdaq.taskmanager.dto.UserDto;
 import com.asdaq.taskmanager.entity.User;
 import com.asdaq.taskmanager.repository.UserRepository;
 import com.asdaq.taskmanager.service.UserService;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,6 +34,30 @@ public class UserServiceImpl implements UserService {
                 savedUser.getName(),
                 savedUser.getEmail(),
                 savedUser.getRole()
+        );
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole()
+        ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole()
         );
     }
 }
