@@ -14,6 +14,9 @@ public class UserDto {
     @NotBlank(message = "Email must not be empty")
     private String email;
 
+    @NotBlank(message = "Password must not be empty")
+    private String password;
+
     @NotBlank(message = "Role must not be empty")
     private String role;
 
@@ -42,6 +45,14 @@ public class UserDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
